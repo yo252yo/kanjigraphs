@@ -1,1 +1,1 @@
-python.exe D:\Japanese\graphs\kanjigraphs.py
+python.exe D:\Japanese\graphs\generate.py
