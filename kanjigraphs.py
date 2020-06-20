@@ -165,7 +165,7 @@ for kanji in kanjis:
         print("encoding fial")
 
 viewgraph = random.random() < 0.8
-sdot.render('D:\Japanese\jap_anki\graphs\graphs\similarity', view=viewgraph)
+sdot.render('D:\Japanese\jap_anki\graphs\similarity', view=viewgraph)
 
 
 
@@ -212,7 +212,7 @@ for kanji in kanjis:
         print("encoding fial")
 
 viewgraph = random.random() < 0.6
-cdot.render('D:\Japanese\jap_anki\graphs\graphs\composition', view=viewgraph)
+cdot.render('D:\Japanese\jap_anki\graphs\composition', view=viewgraph)
 
 
 
@@ -276,7 +276,7 @@ for kanji in kanjis:
 
 
 viewgraph = random.random() < 0.4
-rdot.render('D:\Japanese\jap_anki\graphs\graphs\components', view=viewgraph)
+rdot.render('D:\Japanese\jap_anki\graphs\components', view=viewgraph)
 
 
 
@@ -328,4 +328,4 @@ for kanji in kanjis:
 
 
 viewgraph =  random.random() < 0.4
-odot.render('D:\Japanese\jap_anki\graphs\graphs\oroots', view=viewgraph)
+odot.render('D:\Japanese\jap_anki\graphs\oroots', view=viewgraph)
