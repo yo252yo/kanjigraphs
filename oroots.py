@@ -2,42 +2,42 @@
 from graphviz import Digraph
 
 class ORoots(object):
-    def printComponents(dot, kanji, description, fontsize, components, descriptions, colors):
+    def printComponents(dot, kanji, description, fontsize, data):
         if kanji == "" or kanji == " ":
             return
-        for component in components[kanji]:
+        for component in data.components[kanji]:
             source = component
-            if component in descriptions:
-                source = descriptions[component]
+            if component in data.descriptions:
+                source = data.descriptions[component]
             kanjicomponode = component + "[" + source + "] -> " + description
-            if component in colors:
-                color = colors[component]
+            if component in data.colors:
+                color = data.colors[component]
             else:
                 color = 'lightgrey'
             dot.node(kanjicomponode, label=component, fillcolor=color, fontsize=str(int(fontsize)), style='filled')
             dot.edge(kanjicomponode, description, constraint='true')#.decode('utf-8')
 
-            if component in components:
-                ORoots.printComponents(dot, component, kanjicomponode, fontsize*.7, components, descriptions, colors)
+            if component in data.components:
+                ORoots.printComponents(dot, component, kanjicomponode, fontsize*.7, data)
 
-    def graph(kanjis, colors, descriptions, components):
+    def graph(data):
         dot = Digraph(comment='Roots')
         dot.engine = 'dot'
         dot.format = 'svg'
         dot.attr(rankdir='BT', nodesep='1.0', ranksep='0.1', overlap="false")
         dot.attr('node', fontsize='40')
 
-        for kanji in kanjis:
-            if float(colors[kanji].split(" ")[1]) < 0.8:
+        for kanji in data.kanjis:
+            if float(data.colors[kanji].split(" ")[1]) < 0.8:
                 continue
 
             #try:
             k = kanji#.decode('utf-8')
-            label = ("" + kanji + "\n " + descriptions[kanji])#.decode('utf-8')
-            color = colors[kanji]
-            dot.node(descriptions[kanji], label=kanji, fontsize="40", fillcolor=color, style='filled')
+            label = ("" + kanji + "\n " + data.descriptions[kanji])#.decode('utf-8')
+            color = data.colors[kanji]
+            dot.node(data.descriptions[kanji], label=kanji, fontsize="40", fillcolor=color, style='filled')
 
-            ORoots.printComponents(dot, kanji, descriptions[kanji], 25, components, descriptions, colors)
+            ORoots.printComponents(dot, kanji, data.descriptions[kanji], 25, data)
 
 
             #except Exception:

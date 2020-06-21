@@ -6,7 +6,17 @@ from urllib.request import urlopen
 from collections import defaultdict
 
 class GetData(object):
-    def get(kanjis_url, kanjisim_url, kanjis_file_name, kanjisim_file_name):
+    def __init__(self):
+        self.radicals = ['己', '目', '中', '工', '木', '巳', '王', '田', '丁', '日', '人', '一', '二', '十', '亖', '阝', 'ꓘ', '八', '口', '兀', '丌', '夂', '廿', '尹', '灬', 'モ', '卌', 'ン', 'ヨ', 'ム', 'ヤ', 'セ', '匕', 'ネ', 'コ', 'ラ', 'シ', '厂', 'ク', 'ケ', 'ソ', '⻌', 'イ', '宀', 'ト', '个', 'ナ', '彳', '扌', '弋', '犭', '爿', '戈', '斗', '凵', '艾', '卩', '尺', '亅', '廾', '匕', '冂', '几', '尸', '冫', '匚', '广', '勹', '杰', '丙', '之']
+        self.kanjis = set()
+        self.colors = {}
+        self.descriptions = {}
+        self.components = defaultdict(list)
+        self.anticomponents = defaultdict(list)
+        self.similars = defaultdict(list)
+        self.semilars = defaultdict(list)
+
+    def get(self, kanjis_url, kanjisim_url, kanjis_file_name, kanjisim_file_name):
         response_kanjis = urlopen(kanjis_url)
         response_kanjisim = urlopen(kanjisim_url)
 
@@ -25,24 +35,17 @@ class GetData(object):
         kanjis_file.close()
         kanjisim_file.close()
 
-
-        # ============== IMPORT DATA
-
-
         cr = csv.reader(lines_kanjis)
 
         kanjilist = []
         for row in cr:
             kanjilist.append(row)
 
-        kanjis = set()
-        colors = {}
-        descriptions = {}
         for i, k in enumerate(kanjilist):
             if i == 0 or k[0] == '':
                 continue
 
-            kanjis.add(k[0])
+            self.kanjis.add(k[0])
             percent =  (i + 1) / len(kanjilist)
             index = pow(percent, 9) # 1 is new, 0 is old.
 
@@ -60,35 +63,27 @@ class GetData(object):
             #!!!!!!!!!!!!!!!!!!!! for now, everything will be around 0, so we'll artificially enforce
             #redness = math.pow(redness, 2)
 
-            colors[k[0]] = '0.6 ' + str(redness) + ' 1.0'
+            self.colors[k[0]] = '0.6 ' + str(redness) + ' 1.0'
 
             if i >= len(kanjilist)-4: # 4 most recent get spotlight
-                colors[k[0]] = '0.8 1.0 1.0'
+                self.colors[k[0]] = '0.8 1.0 1.0'
 
             if random.random() < 0.02: # Random spotlight
-                colors[k[0]] = '0.0 0.9 1.0'
-            descriptions[k[0]] = k[1] + " (" + k[2] + ")"
+                self.colors[k[0]] = '0.0 0.9 1.0'
+            self.descriptions[k[0]] = k[1] + " (" + k[2] + ")"
 
         #kanjis.remove('')
 
-        radicals = ['己', '目', '中', '工', '木', '巳', '王', '田', '丁', '日', '人', '一', '二', '十', '亖', '阝', 'ꓘ', '八', '口', '兀', '丌', '夂', '廿', '尹', '灬', 'モ', '卌', 'ン', 'ヨ', 'ム', 'ヤ', 'セ', '匕', 'ネ', 'コ', 'ラ', 'シ', '厂', 'ク', 'ケ', 'ソ', '⻌', 'イ', '宀', 'ト', '个', 'ナ', '彳', '扌', '弋', '犭', '爿', '戈', '斗', '凵', '艾', '卩', '尺', '亅', '廾', '匕', '冂', '几', '尸', '冫', '匚', '广', '勹', '杰', '丙', '之']
-
-        components = defaultdict(list)
-        anticomponents = defaultdict(list)
-        similars = defaultdict(list)
-        semilars = defaultdict(list)
-
         for k in kanjilist:
             for kk in k[3]:#.split(" "):
-                if kk in kanjis or kk in radicals:
-                    components[k[0]].append(kk)
-                    anticomponents[kk].append(k[0])
+                if kk in self.kanjis or kk in self.radicals:
+                    self.components[k[0]].append(kk)
+                    self.anticomponents[kk].append(k[0])
             splitkanjisim = k[4].split("###")
             for kk in splitkanjisim[0]:
-                if kk in kanjis:
-                    similars[k[0]].append(kk)
+                if kk in self.kanjis:
+                    self.similars[k[0]].append(kk)
             if len(splitkanjisim) > 1:
                 for kk in splitkanjisim[1]:
-                    if kk in kanjis:
-                        semilars[k[0]].append(kk)
-        return (kanjis, colors, descriptions, components, anticomponents, radicals, similars, semilars)
+                    if kk in self.kanjis:
+                        self.semilars[k[0]].append(kk)

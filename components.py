@@ -4,19 +4,19 @@ from graphviz import Digraph
 
 class Components(object):
 
-    def fontsize(kanji, anticomponents):
-        size = 20 + math.sqrt(len(anticomponents[kanji]))*10
+    def fontsize(kanji, data):
+        size = 20 + math.sqrt(len(data.anticomponents[kanji]))*10
         return str(size)
 
-    def graph(kanjis, colors, descriptions, components, anticomponents, radicals):
+    def graph(data):
         dot = Digraph(comment='Kanjis')
         dot.engine = 'neato'
         dot.format = 'svg'
         dot.attr(rankdir='TB', nodesep='5.0', ranksep='5.0', overlap="false")
         dot.attr('node', fontsize='30')
 
-        for radical in radicals:
-            if radical in kanjis:
+        for radical in data.radicals:
+            if radical in data.kanjis:
                 continue
 
             try:
@@ -24,28 +24,28 @@ class Components(object):
             except Exception:
                 print("encoding fial")
 
-        for kanji in kanjis:
+        for kanji in data.kanjis:
             #try:
                 k = kanji#.decode('utf-8')
-                label = ("" + kanji + "\n " + descriptions[kanji])#.decode('utf-8')
-                color = colors[kanji]
+                label = ("" + kanji + "\n " + data.descriptions[kanji])#.decode('utf-8')
+                color = data.colors[kanji]
 
-                if (len(components[kanji]) == 0 and  colors[kanji] != '0.6 0.8 1.0'):
+                if (len(data.components[kanji]) == 0 and  data.colors[kanji] != '0.6 0.8 1.0'):
                     color = "lightgrey"
 
-                if not (len(anticomponents[kanji]) == 0):
-                    dot.node(descriptions[kanji], label=kanji, fontsize=Components.fontsize(kanji, anticomponents), fillcolor=color, style='filled')
+                if not (len(data.anticomponents[kanji]) == 0):
+                    dot.node(data.descriptions[kanji], label=kanji, fontsize=Components.fontsize(kanji, data), fillcolor=color, style='filled')
                     shape = "circle"
                 else:
                     shape = "doublecircle"
 
-                for component in components[kanji]:
-                    kanjicomponode = descriptions[kanji] + " <- " + component
-                    dot.node(kanjicomponode, label=kanji, fillcolor=color, fontsize=Components.fontsize(kanji, anticomponents), style='filled', shape=shape)
+                for component in data.components[kanji]:
+                    kanjicomponode = data.descriptions[kanji] + " <- " + component
+                    dot.node(kanjicomponode, label=kanji, fillcolor=color, fontsize=Components.fontsize(kanji, data), style='filled', shape=shape)
                     #if component in radicals or len(components[component]) == 0:
                     source = component
-                    if component in descriptions:
-                        source = descriptions[component]
+                    if component in data.descriptions:
+                        source = data.descriptions[component]
                     dot.edge(source, kanjicomponode, constraint='true')#.decode('utf-8')
             #except Exception:
             #    print("encoding fial")

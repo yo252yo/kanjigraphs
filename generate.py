@@ -16,22 +16,23 @@ kanjisim_file_name = ('D:/Japanese/jap_anki/dumps/graph_kanjis_sim.txt')
 
 
 print("Fetching data")
-(kanjis, colors, descriptions, components, anticomponents, radicals, similars, semilars) = GetData.get(kanjis_url, kanjisim_url, kanjis_file_name, kanjisim_file_name)
+data = GetData()
+data.get(kanjis_url, kanjisim_url, kanjis_file_name, kanjisim_file_name)
 
 print("Printing similarity")
-sdot = Similarity.graph(kanjis, colors, descriptions, components, anticomponents, radicals, similars, semilars)
+sdot = Similarity.graph(data)
 sdot.render('D:\Japanese\jap_anki\graphs\similarity', view=(random.random() < 0.8))
 
 print("Printing composition")
-cdot = Composition.graph(kanjis, colors, descriptions, components, anticomponents, radicals)
+cdot = Composition.graph(data)
 cdot.render('D:\Japanese\jap_anki\graphs\composition', view=(random.random() < 0.6))
 
 print("Printing components")
-rdot = Components.graph(kanjis, colors, descriptions, components, anticomponents, radicals)
+rdot = Components.graph(data)
 rdot.render('D:\Japanese\jap_anki\graphs\components', view=(random.random() < 0.4))
 
 print("Printing ORoots")
-odot = ORoots.graph(kanjis, colors, descriptions, components)
+odot = ORoots.graph(data)
 odot.render('D:\Japanese\jap_anki\graphs\oroots', view=(random.random() < 0.4))
 
 print("All done")
