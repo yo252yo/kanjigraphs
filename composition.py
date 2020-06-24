@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from graphviz import Digraph
+import random
 
 class Composition(object):
 
@@ -10,7 +11,12 @@ class Composition(object):
         dot.attr(rankdir='TB', nodesep='5.0', ranksep='5.0', overlap="false")
         dot.attr('node', fontsize='30')
 
+        allkanjis = []
         for kanji in data.kanjis:
+            if random.random() < 0.7:
+                allkanjis.append(kanji)
+
+        for kanji in allkanjis:
             if kanji in data.radicals:
                 continue
             #try:
@@ -28,7 +34,7 @@ class Composition(object):
             dot.node(data.descriptions[kanji], label=kanji, fillcolor=color, style='filled', shape=shape)
 
             for component in data.components[kanji]:
-                if component not in data.radicals:
+                if component not in data.radicals and component in allkanjis:
                     source = component
                     if component in data.descriptions:
                         source = data.descriptions[component]
