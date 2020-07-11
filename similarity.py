@@ -5,7 +5,7 @@ import random
 
 class Similarity(object):
     dangerzones = ['傷', '料', '投', '音', '理', '物', '話', '徒', '院', '完', '寝', '集', '攻']
-    
+
     def graph(data):
         dot = Graph(comment='Kanjis', strict=True)
         dot.engine = 'neato'
@@ -44,10 +44,12 @@ class Similarity(object):
 
                 for similar in data.similars[kanji]:
                     color = "black"
+                    style = "invis"
                     if (similar in Similarity.dangerzones or kanji in Similarity.dangerzones):
                         color = "red"
+                        style = ""
                     if not similaredges[kanji] or not similar in similaredges[kanji]:
-                        dot.edge(data.descriptions[kanji], data.descriptions[similar], color=color, constraint="true")#.decode('utf-8')
+                        dot.edge(data.descriptions[kanji], data.descriptions[similar], color=color, constraint="true", style=style#.decode('utf-8')
                     similaredges[kanji].add(similar)
                     similaredges[similar].add(kanji)
 
