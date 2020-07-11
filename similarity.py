@@ -22,12 +22,12 @@ class Similarity(object):
                 label = ("<b>" + kanji + "</b>\n " + data.descriptions[kanji])#.decode('utf-8')
 
                 shape = "circle"
-                color = "black"
+                fcolor = "0 0 " + str(1-(0.2 + 0.8 * data.ease[kanji]))
+                color = fcolor
                 if (kanji in Similarity.dangerzones):
                     shape = "doublecircle"
                     color = "red"
 
-                fcolor = "0 0 " + str(1-(0.2 + 0.8 * data.ease[kanji]))
                 node = dot.node(data.descriptions[kanji], label=kanji, shape=shape, color=color, fontcolor=fcolor, fillcolor=data.colors[kanji], style='filled')
 
         #        constraint='true'
