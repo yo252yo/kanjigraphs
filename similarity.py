@@ -2,6 +2,8 @@
 from graphviz import Graph
 from collections import defaultdict
 import random
+import math
+
 
 class Similarity(object):
     dangerzones = ['傷', '料', '投', '音', '理', '物', '話', '徒', '院', '完', '寝', '集', '攻']
@@ -25,7 +27,8 @@ class Similarity(object):
                     shape = "doublecircle"
                     color = "red"
 
-                node = dot.node(data.descriptions[kanji], label=kanji, shape=shape, color=color, fillcolor=data.colors[kanji], style='filled')
+                fcolor = "0 0 " + str(1-(0.2 + 0.8 * data.ease[kanji]))
+                node = dot.node(data.descriptions[kanji], label=kanji, shape=shape, color=color, fontcolor=fcolor, fillcolor=data.colors[kanji], style='filled')
 
         #        constraint='true'
         #        color = "black"
