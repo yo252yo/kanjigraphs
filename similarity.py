@@ -49,7 +49,7 @@ class Similarity(object):
                         color = "red"
                         style = ""
                     if not similaredges[kanji] or not similar in similaredges[kanji]:
-                        dot.edge(data.descriptions[kanji], data.descriptions[similar], color=color, constraint="true", style=style#.decode('utf-8')
+                        dot.edge(data.descriptions[kanji], data.descriptions[similar], color=color, constraint="true", style=style)#.decode('utf-8')
                     similaredges[kanji].add(similar)
                     similaredges[similar].add(kanji)
 
