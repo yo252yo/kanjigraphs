@@ -25,14 +25,14 @@ sdot.render('D:\Japanese\jap_anki\graphs\similarity', view=(random.random() < 0.
 
 print("Printing composition")
 cdot = Composition.graph(data)
-cdot.render('D:\Japanese\jap_anki\graphs\composition', view=(random.random() < 0.6))
-
-print("Printing components")
-rdot = Components.graph(data)
-rdot.render('D:\Japanese\jap_anki\graphs\components', view=(random.random() < 0.4))
+cdot.render('D:\Japanese\jap_anki\graphs\composition', view=(random.random() < 0.7))
 
 print("Printing ORoots")
 odot = ORoots.graph(data)
-odot.render('D:\Japanese\jap_anki\graphs\oroots', view=(random.random() < 0.4))
+odot.render('D:\Japanese\jap_anki\graphs\oroots', view=(random.random() < 0.5))
+
+print("Printing components")
+rdot = Components.graph(data)
+rdot.render('D:\Japanese\jap_anki\graphs\components', view=(random.random() < 0.2))
 
 print("All done")

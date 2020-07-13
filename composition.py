@@ -13,8 +13,17 @@ class Composition(object):
 
         allkanjis = []
         for kanji in data.kanjis:
-            if random.random() < 0.7:
+            if kanji in data.spotlight or random.random() < 0.05:
                 allkanjis.append(kanji)
+        modif = True
+        while modif:
+            modif = False
+            for kanji in allkanjis:
+                for newkanji in data.anticomponents[kanji]:
+                    if newkanji not in allkanjis:
+                        allkanjis.append(newkanji)
+                        modif = True
+
 
         for kanji in allkanjis:
             if kanji in data.radicals:

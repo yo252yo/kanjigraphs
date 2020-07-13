@@ -12,6 +12,7 @@ class GetData(object):
         self.ease = {}
         self.colors = {}
         self.descriptions = {}
+        self.spotlight = set()
         self.components = defaultdict(list)
         self.anticomponents = defaultdict(list)
         self.similars = defaultdict(list)
@@ -69,9 +70,11 @@ class GetData(object):
 
             if i >= len(kanjilist)-4: # 4 most recent get spotlight
                 self.colors[k[0]] = '0.8 1.0 1.0'
+                self.spotlight.add(k[0])
 
             if random.random() < 0.02: # Random spotlight
                 self.colors[k[0]] = '0.0 0.9 1.0'
+                self.spotlight.add(k[0])
             self.descriptions[k[0]] = k[1] + " (" + k[2] + ")"
 
         #kanjis.remove('')
