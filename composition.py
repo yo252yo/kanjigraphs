@@ -19,7 +19,7 @@ class Composition(object):
         while modif:
             modif = False
             for kanji in allkanjis:
-                for newkanji in data.anticomponents[kanji]:
+                for newkanji in data.components[kanji]:
                     if newkanji not in allkanjis:
                         allkanjis.append(newkanji)
                         modif = True
