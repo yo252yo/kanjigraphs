@@ -21,7 +21,7 @@ data.get(kanjis_url, kanjisim_url, kanjis_file_name, kanjisim_file_name)
 
 print("Printing similarity")
 sdot = Similarity.graph(data)
-sdot.render('D:\Japanese\jap_anki\graphs\similarity', view=(random.random() < 0.8))
+sdot.render('D:\Japanese\jap_anki\graphs\similarity', view=(random.random() < 0.7))
 
 print("Printing composition")
 cdot = Composition.graph(data)
@@ -33,6 +33,6 @@ odot.render('D:\Japanese\jap_anki\graphs\oroots', view=(random.random() < 0.5))
 
 print("Printing components")
 rdot = Components.graph(data)
-rdot.render('D:\Japanese\jap_anki\graphs\components', view=(random.random() < 0.2))
+rdot.render('D:\Japanese\jap_anki\graphs\components', view=(random.random() < 0.4))
 
 print("All done")

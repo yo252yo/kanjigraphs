@@ -13,7 +13,7 @@ class Composition(object):
 
         allkanjis = []
         for kanji in data.kanjis:
-            if kanji in data.spotlight or random.random() < 0.05:
+            if kanji in data.spotlight or random.random() < 0.1:
                 allkanjis.append(kanji)
         modif = True
         while modif:
