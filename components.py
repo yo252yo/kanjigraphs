@@ -56,7 +56,7 @@ class Components(object):
                     dot.node(description, label=kanji, fontsize=Components.fontsize(kanji, data), fillcolor=Components.color(kanji, data), style='filled', shape=Components.shape(kanji, data))
 
                     for component in data.anticomponents[kanji]:
-                        kanjicomponode = description + " <- " + component
+                        kanjicomponode = kanji + " -> " + Components.get(data.descriptions, component, component)
                         dot.node(kanjicomponode, label=component, fillcolor=Components.color(component, data), fontsize=Components.fontsize(component, data), style='filled', shape=Components.shape(component, data))
                         #if component in radicals or len(components[component]) == 0:
                         source = Components.get(data.descriptions, component, component)
