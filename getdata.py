@@ -28,6 +28,8 @@ class GetData(object):
         kanjis_file = codecs.open(kanjis_file_name, 'w', 'utf-8')
         kanjisim_file = codecs.open(kanjisim_file_name, 'w', 'utf-8')
 
+        if(len(lines_kanjis) < 2 or len(lines_kanjisim) < 2):
+            raise Exception('unavailable spreadsheet')
 
         for line in lines_kanjis:
             kanjis_file.write(line + "\r\n")
