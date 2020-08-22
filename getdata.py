@@ -54,6 +54,8 @@ class GetData(object):
             index = pow(percent, 9) # 1 is new, 0 is old.
 
             if k[8] == "" or k[8] == "#N/A":
+                if i == 3:
+                    raise Exception('unavailable spreadsheet')
                 ease = 0
             else:
                 ease = int(k[8]) # number of days until resched
