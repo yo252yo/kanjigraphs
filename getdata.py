@@ -18,26 +18,20 @@ class GetData(object):
         self.similars = defaultdict(list)
         self.semilars = defaultdict(list)
 
-    def get(self, kanjis_url, kanjisim_url, kanjis_file_name, kanjisim_file_name):
+    def get(self, kanjis_url, kanjis_file_name):
         response_kanjis = urlopen(kanjis_url)
-        response_kanjisim = urlopen(kanjisim_url)
 
         lines_kanjis = response_kanjis.read().decode('utf-8').splitlines()
-        lines_kanjisim = response_kanjisim.read().decode('utf-8').splitlines()
 
         kanjis_file = codecs.open(kanjis_file_name, 'w', 'utf-8')
-        kanjisim_file = codecs.open(kanjisim_file_name, 'w', 'utf-8')
 
-        if(len(lines_kanjis) < 2 or len(lines_kanjisim) < 2):
+        if(len(lines_kanjis) < 2):
             raise Exception('unavailable spreadsheet')
 
         for line in lines_kanjis:
             kanjis_file.write(line + "\r\n")
-        for line in lines_kanjisim:
-            kanjisim_file.write(line + "\r\n")
 
         kanjis_file.close()
-        kanjisim_file.close()
 
         cr = csv.reader(lines_kanjis)
 
