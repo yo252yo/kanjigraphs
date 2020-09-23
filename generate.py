@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import random
+import time
 from components import Components
 from composition import Composition
 from getdata import GetData
@@ -13,23 +14,35 @@ kanjis_file_name = ('D:/Japanese/jap_anki/dumps/graph_kanjis_details.txt')
 
 
 print("Fetching data")
-data = GetData()
-data.get(kanjis_url, kanjis_file_name)
+fetched = False
+while not fetched:
+    try:
+        data = GetData()
+        data.get(kanjis_url, kanjis_file_name)
+        fetched = True
+    except Exception:
+        print("- retry")
+        time.sleep(60)
+
 
 print("Printing similarity")
 sdot = Similarity.graph(data)
-sdot.render('D:\Japanese\jap_anki\graphs\similarity', view=(random.random() < 0.7))
+sdisplay = random.random() < 0.7
+sdot.render('D:\Japanese\jap_anki\graphs\similarity', view=sdisplay)
 
 print("Printing composition")
 cdot = Composition.graph(data)
-cdot.render('D:\Japanese\jap_anki\graphs\composition', view=(random.random() < 0.7))
+cdisplay = random.random() < 0.7
+cdot.render('D:\Japanese\jap_anki\graphs\composition', view=cdisplay)
 
 print("Printing ORoots")
 odot = ORoots.graph(data)
-odot.render('D:\Japanese\jap_anki\graphs\oroots', view=(random.random() < 0.5))
+odisplay = random.random() < 0.5
+odot.render('D:\Japanese\jap_anki\graphs\oroots', view=odisplay)
 
 print("Printing components")
 rdot = Components.graph(data)
+rdisplay = (not (sdisplay or cdisplay or odisplay)) or (random.random() < 0.4)
 rdot.render('D:\Japanese\jap_anki\graphs\components', view=(random.random() < 0.4))
 
 print("All done")
