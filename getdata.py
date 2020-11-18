@@ -47,9 +47,11 @@ class GetData(object):
             percent =  (i + 1) / len(kanjilist)
             index = pow(percent, 9) # 1 is new, 0 is old.
 
-            if k[8] == "" or k[8] == "#N/A":
+            if len(k) < 8:
+                raise Exception('spreadsheet has empty lines:' + str(i) + "/" + k[0])
+            elif k[8] == "" or k[8] == "#N/A":
                 if i == 3:
-                    raise Exception('unavailable spreadsheet')
+                    raise Exception('spreadsheet has no data')
                 ease = 0
             else:
                 ease = int(k[8]) # number of days until resched

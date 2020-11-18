@@ -20,8 +20,9 @@ while not fetched:
         data = GetData()
         data.get(kanjis_url, kanjis_file_name)
         fetched = True
-    except Exception:
+    except Exception as e:
         print("- retry")
+        print(e)
         time.sleep(60)
 
 
