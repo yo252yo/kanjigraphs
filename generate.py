@@ -10,6 +10,7 @@ from similarity import Similarity
 
 # CSV format: kanji/pronounciations/meaning/components/similar kanjis/../../../ease level/
 kanjis_url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQtNCsV4crkpKfJGHa1dQniBbtNs1VrmE3MlhUDo2lT2DghEbO3fJKg5bR2FC_wn83hI0tgl2e1i172/pub?gid=1079852200&output=csv'
+# https://spreadsheets.google.com/feeds/download/spreadsheets/Export?key=16H15Te4hGrKUx1VEpvexZ94rrFWek1k3J7UL9qVVTG4&exportFormat=csv&gid=1079852200
 kanjis_file_name = ('D:/Japanese/jap_anki/dumps/graph_kanjis_details.txt')
 
 
