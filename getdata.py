@@ -72,7 +72,7 @@ class GetData(object):
                 self.colors[k[0]] = '0.8 1.0 1.0'
                 self.spotlight.add(k[0])
 
-            if random.random() < 0.015: # Random spotlight
+            if random.random() < 0.02: # Random spotlight
                 self.colors[k[0]] = '0.0 0.9 1.0'
                 self.spotlight.add(k[0])
             self.descriptions[k[0]] = k[1] + " (" + k[2] + ")"
@@ -92,3 +92,23 @@ class GetData(object):
                 for kk in splitkanjisim[1]:
                     if kk in self.kanjis:
                         self.semilars[k[0]].append(kk)
+
+    def bufferKanjiSimData(self, kanjisim1_url, kanjisim2_url, kanjisim_file_name):
+        response_kanjisim1 = urlopen(kanjisim1_url)
+        response_kanjisim2 = urlopen(kanjisim2_url)
+
+        lines_kanjisim1 = response_kanjisim1.read().decode('utf-8').splitlines()
+        lines_kanjisim2 = response_kanjisim2.read().decode('utf-8').splitlines()
+
+        if(len(lines_kanjisim1) < 2 or len(lines_kanjisim2) < 2):
+            return
+
+        kanjisim_file = codecs.open(kanjisim_file_name, 'w', 'utf-8')
+
+
+        for line in lines_kanjisim1:
+            kanjisim_file.write(line + "\r\n")
+        for line in lines_kanjisim2:
+            kanjisim_file.write(line + "\r\n")
+
+        kanjisim_file.close()
