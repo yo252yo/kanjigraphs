@@ -5,6 +5,7 @@ import random
 class Composition(object):
 
     def graph(data):
+        print("Printing composition")
         dot = Digraph(comment='Kanjis')
         dot.engine = 'neato'
         dot.format = 'svg'

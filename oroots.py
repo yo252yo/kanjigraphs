@@ -21,6 +21,7 @@ class ORoots(object):
                 ORoots.printComponents(dot, component, kanjicomponode, fontsize*.7, data)
 
     def graph(data):
+        print("Printing ORoots")
         dot = Digraph(comment='Roots')
         dot.engine = 'dot'
         dot.format = 'svg'

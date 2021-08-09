@@ -28,6 +28,7 @@ class Components(object):
         return shape
 
     def graph(data):
+        print("Printing components")
         dot = Digraph(comment='Kanjis')
         dot.engine = 'neato'
         dot.format = 'svg'

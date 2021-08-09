@@ -9,10 +9,11 @@ class Similarity(object):
     dangerzones = ['傷', '料', '投', '理', '義', '徒', '院', '完', '寝', '集', '攻', '職', '季', '真', '墓', '慣']
 
     def graph(data):
+        print("Printing similarity")
         dot = Graph(comment='Kanjis', strict=True)
         dot.engine = 'neato'
         dot.format = 'svg'
-        dot.attr(rankdir='TB', overlap="false")
+        dot.attr(rankdir='TB', overlap="false", outputorder="edgesfirst")
         dot.attr('node', fontsize='30')
 
         similaredges = defaultdict(set)
@@ -46,13 +47,12 @@ class Similarity(object):
 
 
                 for similar in data.similars[kanji]:
-                    color = "black"
-                    style = "invis"
+                    color = "#F1F1F1"
                     if (similar in Similarity.dangerzones or kanji in Similarity.dangerzones):
                         color = "red"
                         style = ""
                     if not similaredges[kanji] or not similar in similaredges[kanji]:
-                        dot.edge(data.descriptions[kanji], data.descriptions[similar], color=color, constraint="true", style=style)#.decode('utf-8')
+                        dot.edge(data.descriptions[kanji], data.descriptions[similar], color=color, constraint="true")#.decode('utf-8')
                     similaredges[kanji].add(similar)
                     similaredges[similar].add(kanji)
 
@@ -61,7 +61,7 @@ class Similarity(object):
                     if (similar in Similarity.dangerzones or kanji in Similarity.dangerzones):
                         color = "red"
                     if not similaredges[kanji] or not similar in similaredges[kanji]:
-                        if random.random() >= 0.3: # random dropoff
+                        if random.random() >= 0.1: # random dropoff
                             dot.edge(data.descriptions[kanji], data.descriptions[similar], color=color, constraint="false")#.decode('utf-8')
                     similaredges[kanji].add(similar)
                     similaredges[similar].add(kanji)

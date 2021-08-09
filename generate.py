@@ -18,35 +18,37 @@ kanjissim_file_name = ('D:/Japanese/jap_anki/dumps/graph_kanjis_sim.txt')
 
 
 print("Fetching data")
-fetched = False
-while not fetched:
+data = GetData()
+
+fetchedKS = False
+while not fetchedKS:
     try:
-        data = GetData()
-        data.bufferKanjiSimData(kanjisim_url1, kanjisim_url2, kanjissim_file_name)
-        data.get(kanjis_url, kanjis_file_name)
-        fetched = True
+        fetchedKS = data.bufferKanjiSimData(kanjisim_url1, kanjisim_url2, kanjissim_file_name)
     except Exception as e:
-        print("- retry")
-        print(e)
+        print("- retry: " + str(e))
+        time.sleep(60)
+
+fetchedK = False
+while not fetchedK:
+    try:
+        fetchedK = data.get(kanjis_url, kanjis_file_name)
+    except Exception as e:
+        print("- retry: " + str(e))
         time.sleep(60)
 
 
-print("Printing similarity")
 sdot = Similarity.graph(data)
 sdisplay = random.random() < 0.7
 sdot.render('D:\Japanese\jap_anki\graphs\similarity', view=sdisplay)
 
-print("Printing composition")
 cdot = Composition.graph(data)
 cdisplay = random.random() < 0.7
 cdot.render('D:\Japanese\jap_anki\graphs\composition', view=cdisplay)
 
-print("Printing ORoots")
 odot = ORoots.graph(data)
 odisplay = random.random() < 0.5
 odot.render('D:\Japanese\jap_anki\graphs\oroots', view=odisplay)
 
-print("Printing components")
 rdot = Components.graph(data)
 rdisplay = (not (sdisplay or cdisplay or odisplay)) or (random.random() < 0.4)
 rdot.render('D:\Japanese\jap_anki\graphs\components', view=(random.random() < 0.4))
