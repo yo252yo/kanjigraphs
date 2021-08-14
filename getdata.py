@@ -45,8 +45,6 @@ class GetData(object):
                 continue
 
             self.kanjis.add(k[0])
-            percent =  (i + 1) / len(kanjilist)
-            index = pow(percent, 9) # 1 is new, 0 is old.
 
             if len(k) < 8:
                 raise Exception('spreadsheet has empty lines:' + str(i) + "/" + k[0])
@@ -55,19 +53,9 @@ class GetData(object):
                     raise Exception('spreadsheet has no data')
                 ease = 0
             else:
-                ease = int(k[8]) # number of days until resched
-            #!!!!!!!!!!!!!!!!!!!! for now, everything will be around 0, so we'll artificially enforce
-            # ease += 2
-            # antiease = 2 / math.pow(math.log(ease+3),1.8) # 10d -> .4, 30d -> .2, 60d -> .1
-            antiease = max(1-.05*ease, 0)  # 5d -> .75, 10d -> .5, 20d -> 0
-
-            # redness = (4*max(index, antiease) + min(index, antiease))/5
-            redness = max(index, antiease)
-            self.ease[k[0]] = redness
-            #!!!!!!!!!!!!!!!!!!!! for now, everything will be around 0, so we'll artificially enforce
-            #redness = math.pow(redness, 2)
-
-            self.colors[k[0]] = '0.6 ' + str(redness) + ' 1.0'
+                ease = 1 - float(k[8])
+            self.ease[k[0]] = ease
+            self.colors[k[0]] = '0.6 ' + str(ease) + ' 1.0'
 
             if i >= len(kanjilist)+1:#-4: # 4 most recent get spotlight
                 self.colors[k[0]] = '0.8 1.0 1.0'
