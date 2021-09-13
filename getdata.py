@@ -57,7 +57,7 @@ class GetData(object):
             self.ease[k[0]] = ease
             self.colors[k[0]] = '0.6 ' + str(ease) + ' 1.0'
 
-            if i >= len(kanjilist)+1:#-4: # 4 most recent get spotlight
+            if i >= len(kanjilist)-4: # 4 most recent get spotlight
                 self.colors[k[0]] = '0.8 1.0 1.0'
                 self.spotlight.add(k[0])
 
