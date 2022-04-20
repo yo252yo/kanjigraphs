@@ -7,7 +7,7 @@ from collections import defaultdict
 
 class GetData(object):
     def __init__(self):
-        self.radicals = ['獲', '己', '目', '中', '工', '木', '巳', '王', '田', '丁', '日', '人', '一', '二', '十', '亖', '阝', 'ꓘ', '八', '口', '兀', '丌', '夂', '廿', '尹', '灬', 'モ', '卌', 'ン', 'ヨ', 'ム', 'ヤ', 'セ', '匕', 'ネ', 'コ', 'ラ', 'シ', '厂', 'ク', 'ケ', 'ソ', '⻌', 'イ', '宀', 'ト', '个', 'ナ', '彳', '扌', '弋', '犭', '爿', '戈', '斗', '凵', '艾', '卩', '尺', '亅', '廾', '匕', '冂', '几', '尸', '冫', '匚', '广', '勹', '杰', '丙', '之']
+        self.radicals = ['橋', '獲', '己', '目', '中', '工', '木', '巳', '王', '田', '丁', '日', '人', '一', '二', '十', '亖', '阝', 'ꓘ', '八', '口', '兀', '丌', '夂', '廿', '尹', '灬', 'モ', '卌', 'ン', 'ヨ', 'ム', 'ヤ', 'セ', '匕', 'ネ', 'コ', 'ラ', 'シ', '厂', 'ク', 'ケ', 'ソ', '⻌', 'イ', '宀', 'ト', '个', 'ナ', '彳', '扌', '弋', '犭', '爿', '戈', '斗', '凵', '艾', '卩', '尺', '亅', '廾', '匕', '冂', '几', '尸', '冫', '匚', '广', '勹', '杰', '丙', '之']
         self.kanjis = set()
         self.ease = {}
         self.colors = {}
@@ -48,7 +48,7 @@ class GetData(object):
 
             if len(k) < 8:
                 raise Exception('spreadsheet has empty lines:' + str(i) + "/" + k[0])
-            elif k[8] == "" or k[8] == "#N/A":
+            elif k[8] == "" or k[8] == "#N/A" or ((k[8] == "-1" or k[8] == "0") and i < 10):
                 if i == 3:
                     raise Exception('spreadsheet has no data')
                 ease = 0
@@ -56,8 +56,9 @@ class GetData(object):
                 ease = 1 - float(k[8])
             self.ease[k[0]] = ease
             self.colors[k[0]] = '0.6 ' + str(ease) + ' 1.0'
+            print(k[0] + "->" + k[8] + "->" + str(ease))
 
-            if i >= len(kanjilist)-4: # 4 most recent get spotlight
+            if i >= len(kanjilist)-5: # 5 most recent get spotlight
                 self.colors[k[0]] = '0.8 1.0 1.0'
                 self.spotlight.add(k[0])
 

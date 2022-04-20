@@ -20,18 +20,18 @@ kanjissim_file_name = ('D:/Japanese/jap_anki/dumps/graph_kanjis_sim.txt')
 print("Fetching data")
 data = GetData()
 
-fetchedKS = False
-while not fetchedKS:
-    try:
-        fetchedKS = data.bufferKanjiSimData(kanjisim_url1, kanjisim_url2, kanjissim_file_name)
-    except Exception as e:
-        print("- retry: " + str(e))
-        time.sleep(60)
-
 fetchedK = False
 while not fetchedK:
     try:
         fetchedK = data.get(kanjis_url, kanjis_file_name)
+    except Exception as e:
+        print("- retry: " + str(e))
+        time.sleep(60)
+
+fetchedKS = False
+while not fetchedKS:
+    try:
+        fetchedKS = data.bufferKanjiSimData(kanjisim_url1, kanjisim_url2, kanjissim_file_name)
     except Exception as e:
         print("- retry: " + str(e))
         time.sleep(60)
