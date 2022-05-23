@@ -29,7 +29,7 @@ class ORoots(object):
         dot.attr('node', fontsize='40')
 
         for kanji in data.kanjis:
-            if float(data.colors[kanji].split(" ")[1]) < 0.95:
+            if float(data.colors[kanji].split(" ")[1]) < 0.97:
                 continue
 
             #try:

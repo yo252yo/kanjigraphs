@@ -9,7 +9,7 @@ class Composition(object):
         dot = Digraph(comment='Kanjis')
         dot.engine = 'neato'
         dot.format = 'svg'
-        dot.attr(rankdir='TB', nodesep='5.0', ranksep='5.0', overlap="false")
+        dot.attr(overlap="false", sep="-0.1")
         dot.attr('node', fontsize='30')
 
         allkanjis = []

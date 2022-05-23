@@ -51,6 +51,6 @@ odot.render('D:\Japanese\jap_anki\graphs\oroots', view=odisplay)
 
 rdot = Components.graph(data)
 rdisplay = (not (sdisplay or cdisplay or odisplay)) or (random.random() < 0.4)
-rdot.render('D:\Japanese\jap_anki\graphs\components', view=(random.random() < 0.4))
+rdot.render('D:\Japanese\jap_anki\graphs\components', view=rdisplay)
 
 print("All done")

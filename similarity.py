@@ -13,9 +13,8 @@ class Similarity(object):
         dot = Graph(comment='Kanjis', strict=True)
         dot.engine = 'neato'
         dot.format = 'svg'
-        dot.attr(rankdir='TB', overlap="false", outputorder="edgesfirst")
+        dot.attr(overlap="porthox", sep="-0.2", outputorder="edgesfirst")
         dot.attr('node', fontsize='30')
-
         similaredges = defaultdict(set)
         for kanji in data.kanjis:
             #try:
