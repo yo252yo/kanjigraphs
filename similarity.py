@@ -6,7 +6,7 @@ import math
 
 
 class Similarity(object):
-    dangerzones = ['傷', '料', '投', '義', '院', '完', '集', '攻', '職', '節', '真', '墓', '慣']
+    dangerzones = ['傷', '贈', '境', '料', '投', '義', '院', '完', '集', '攻', '職', '節', '真', '墓', '慣']
 
     def graph(data):
         print("Printing similarity")
@@ -47,11 +47,13 @@ class Similarity(object):
 
                 for similar in data.similars[kanji]:
                     color = "#F1F1F1"
+                    weight = "1"
                     if (similar in Similarity.dangerzones or kanji in Similarity.dangerzones):
                         color = "red"
                         style = ""
+                        weight = "4"
                     if not similaredges[kanji] or not similar in similaredges[kanji]:
-                        dot.edge(data.descriptions[kanji], data.descriptions[similar], color=color, constraint="true")#.decode('utf-8')
+                        dot.edge(data.descriptions[kanji], data.descriptions[similar], color=color, constraint="true", weight=weight)#.decode('utf-8')
                     similaredges[kanji].add(similar)
                     similaredges[similar].add(kanji)
 
