@@ -11,6 +11,7 @@ class GetData(object):
         self.kanjis = set()
         self.ease = {}
         self.colors = {}
+        self.keywords = {}
         self.descriptions = {}
         self.spotlight = set()
         self.components = defaultdict(list)
@@ -66,6 +67,12 @@ class GetData(object):
                 self.colors[k[0]] = '0.0 0.9 1.0'
                 self.spotlight.add(k[0])
             self.descriptions[k[0]] = k[1] + " (" + k[2] + ")"
+
+            if not k[5] == "N/A":
+                for l in  k[5].split("\n"):
+                    if not k[0] in self.keywords:
+                        self.keywords[k[0]] = []
+                    self.keywords[k[0]].append(l)
 
         #kanjis.remove('')
 

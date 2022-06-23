@@ -6,6 +6,7 @@ from composition import Composition
 from getdata import GetData
 from oroots import ORoots
 from similarity import Similarity
+from keywords import Keywords
 
 
 # CSV format: kanji/pronounciations/meaning/components/similar kanjis/../../../ease level/
@@ -37,6 +38,10 @@ while not fetchedKS:
         time.sleep(60)
 
 
+kdot = Keywords.graph(data)
+kdisplay = random.random() < 10.7 # fix after the development of this graph
+kdot.render('D:\Japanese\jap_anki\graphs\keywords', view=kdisplay)
+
 sdot = Similarity.graph(data)
 sdisplay = random.random() < 0.7
 sdot.render('D:\Japanese\jap_anki\graphs\similarity', view=sdisplay)
@@ -50,7 +55,7 @@ odisplay = random.random() < 0.5
 odot.render('D:\Japanese\jap_anki\graphs\oroots', view=odisplay)
 
 rdot = Components.graph(data)
-rdisplay = (not (sdisplay or cdisplay or odisplay)) or (random.random() < 0.4)
+rdisplay = (not (sdisplay or cdisplay or odisplay or kdisplay)) or (random.random() < 0.4)
 rdot.render('D:\Japanese\jap_anki\graphs\components', view=rdisplay)
 
 print("All done")
