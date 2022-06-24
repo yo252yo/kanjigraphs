@@ -39,23 +39,23 @@ while not fetchedKS:
 
 
 kdot = Keywords.graph(data)
-kdisplay = random.random() < 10.7 # fix after the development of this graph
+kdisplay = random.random() < 0.6 # fix after the development of this graph
 kdot.render('D:\Japanese\jap_anki\graphs\keywords', view=kdisplay)
 
 sdot = Similarity.graph(data)
-sdisplay = random.random() < 0.7
+sdisplay = random.random() < 0.6
 sdot.render('D:\Japanese\jap_anki\graphs\similarity', view=sdisplay)
 
 cdot = Composition.graph(data)
-cdisplay = random.random() < 0.7
+cdisplay = random.random() < 0.5
 cdot.render('D:\Japanese\jap_anki\graphs\composition', view=cdisplay)
 
 odot = ORoots.graph(data)
-odisplay = random.random() < 0.5
+odisplay = random.random() < 0.4
 odot.render('D:\Japanese\jap_anki\graphs\oroots', view=odisplay)
 
 rdot = Components.graph(data)
-rdisplay = (not (sdisplay or cdisplay or odisplay or kdisplay)) or (random.random() < 0.4)
+rdisplay = (not (sdisplay or cdisplay or odisplay or kdisplay)) or (random.random() < 0.3)
 rdot.render('D:\Japanese\jap_anki\graphs\components', view=rdisplay)
 
 print("All done")

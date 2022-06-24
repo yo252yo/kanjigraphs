@@ -69,7 +69,9 @@ class GetData(object):
             self.descriptions[k[0]] = k[1] + " (" + k[2] + ")"
 
             if not k[5] == "N/A":
-                for l in  k[5].split("\n"):
+                for l in k[5].split("  "):
+                    if l == "" or l == "<b></b>":
+                        continue
                     if not k[0] in self.keywords:
                         self.keywords[k[0]] = []
                     self.keywords[k[0]].append(l)
