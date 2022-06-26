@@ -14,7 +14,7 @@ class Keywords(object):
         dot = Graph(comment='Kanjis', strict=True)
         dot.engine = 'neato'
         dot.format = 'svg'
-        dot.attr(overlap="porthox", outputorder="edgesfirst")
+        dot.attr(overlap="porthoy", sep="-0.1", outputorder="edgesfirst")
         dot.attr('node', fontsize='30')
         similaredges = defaultdict(set)
 
@@ -53,15 +53,17 @@ class Keywords(object):
 
         kanjis = kanjis.union(newkanjis)
         for kanji in kanjis:
-            fcolor = "0 0 " + str(1-(0.2 + 0.8 * data.ease[kanji]))
+            fcolor = "0 0 " + str(1-(0.2 + 0.8 * data.ease[kanji])) + " 0.5"
             node = dot.node(data.descriptions[kanji], label=kanji, color=fcolor, fontcolor=fcolor, fillcolor=data.colors[kanji], style='filled')
 
             if kanji in data.keywords:
                 for kw in data.keywords[kanji]:
                     l = kw.split(" ")
+                    if not l[0]:
+                        continue
                     if not l[0] in keywords:
                         keywords[l[0]] = kw
-                    dot.edge(data.descriptions[kanji], Keywords.labelof(keywords, l[0]))#.decode('utf-8')
+                    dot.edge(data.descriptions[kanji], Keywords.labelof(keywords, l[0]), len="0.5", color="green", penwidth="3")#.decode('utf-8')
 
             for similar in (data.similars[kanji] + data.semilars[kanji]):
                 if not similar in kanjis:
@@ -70,5 +72,9 @@ class Keywords(object):
                     dot.edge(data.descriptions[kanji], data.descriptions[similar], color="lightgrey", constraint="false")#.decode('utf-8')
                 similaredges[kanji].add(similar)
                 similaredges[similar].add(kanji)
+
+        for kw in keywords:
+            if len(kw) > 1 and kw[0] in data.descriptions and kw[1] in data.descriptions:
+                dot.edge(data.descriptions[kw[0]], data.descriptions[kw[1]], color="green", len="0.5")#.decode('utf-8')
 
         return dot

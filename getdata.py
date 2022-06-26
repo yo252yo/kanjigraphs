@@ -70,7 +70,7 @@ class GetData(object):
 
             if not k[5] == "N/A":
                 for l in k[5].split("  "):
-                    if l == "" or l == "<b></b>":
+                    if not l or l == "" or "<b></b>" in l:
                         continue
                     if not k[0] in self.keywords:
                         self.keywords[k[0]] = []
