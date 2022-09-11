@@ -6,7 +6,7 @@ import math
 
 
 class Similarity(object):
-    dangerzones = ['傷', '贈', '境', '料', '投', '義', '院', '完', '集', '攻', '職', '節', '真', '墓', '慣']
+    dangerzones = ['騒', '傷', '憎', '培', '鈍', '境', '料', '投', '義', '院', '完', '集', '攻', '職', '節', '真', '墓', '慣']
 
     def graph(data):
         print("Printing similarity")
@@ -24,11 +24,17 @@ class Similarity(object):
                 shape = "circle"
                 fcolor = "0 0 " + str(1-(0.2 + 0.8 * data.ease[kanji]))
                 color = fcolor
+                penwidth = "1"
+
                 if (kanji in Similarity.dangerzones):
                     shape = "doublecircle"
                     color = "red"
+                    penwidth = "3"
+                elif (data.rattrapage[kanji] <= 9):
+                    penwidth = str(2 + 10 - data.rattrapage[kanji])
+                    color = "black"
 
-                node = dot.node(data.descriptions[kanji], label=kanji, shape=shape, color=color, fontcolor=fcolor, fillcolor=data.colors[kanji], style='filled')
+                node = dot.node(data.descriptions[kanji], label=kanji, penwidth=penwidth, shape=shape, color=color, fontcolor=fcolor, fillcolor=data.colors[kanji], style='filled')
 
         #        constraint='true'
         #        color = "black"

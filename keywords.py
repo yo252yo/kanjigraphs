@@ -36,12 +36,20 @@ class Keywords(object):
 
         kanjis = kanjis.union(newkanjis)
         for kanji in kanjis:
-            fcolor = "0 0 " + str(1-(0.1 + 0.2 * data.ease[kanji]))# + " 0.5"
+            ease = data.rattrapage[kanji] / 10
+            fcolor = "0 0 " + str(1-(0.1 + 0.2 * ease))# + " 0.5"
 
             bgcolor = data.colors[kanji]
             if bgcolor.startswith("0.6"):
-                bgcolor =  '0.6 ' + str(1-(0.6 + 0.4 * data.ease[kanji])) + ' 1.0'
-            node = dot.node(data.descriptions[kanji], label=kanji, color=fcolor, fontcolor=fcolor, fillcolor=bgcolor, style='filled')
+                bgcolor =  '0.6 ' + str(1-(0.6 + 0.4 * ease)) + ' 1.0'
+
+            shape = "circle"
+            color = fcolor
+            if (data.rattrapage[kanji] < 8):
+                shape = "doublecircle"
+                color = "red"
+
+            node = dot.node(data.descriptions[kanji], label=kanji, shape=shape, color=color, fontcolor=fcolor, fillcolor=bgcolor, style='filled')
 
             if kanji in data.keywords:
                 for kw in data.keywords[kanji]:

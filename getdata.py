@@ -11,6 +11,7 @@ class GetData(object):
         self.kanjis = set()
         self.ease = {}
         self.colors = {}
+        self.rattrapage = {}
         self.keywords = {}
         self.descriptions = {}
         self.spotlight = set()
@@ -67,6 +68,12 @@ class GetData(object):
                 self.colors[k[0]] = '0.0 0.9 1.0'
                 self.spotlight.add(k[0])
             self.descriptions[k[0]] = k[1] + " (" + k[2] + ")"
+
+            if k[21]:
+                self.rattrapage[k[0]] = int(k[21])
+            else:
+                self.rattrapage[k[0]] = 11
+
 
             if not k[5] == "N/A":
                 for l in k[5].split("  "):
