@@ -6,8 +6,7 @@ import math
 
 
 class Similarity(object):
-    dangerzones = ['騒', '傷', '憎', '培', '鈍', '境', '料', '投', '義', '院', '完', '集', '攻', '職', '節', '真', '墓', '慣']
-
+    dangerzones = ['騒', '傷', '措', '憎', '培', '鈍', '境', '料', '投', '義', '院', '完', '集', '攻', '職', '節', '真', '墓', '慣']
     def graph(data):
         print("Printing similarity")
         dot = Graph(comment='Kanjis', strict=True)

@@ -83,7 +83,7 @@ class Keywords(object):
             if d>0:
                 ease /= d
 
-            fe = str((0.2 + 0.8 * ease))
+            fe = str((0.05 + 0.95 * ease * ease))
             fcolor = "0.4 " + fe + " 1"
             node = dot.node(Keywords.labelof(keywords, kw), fontsize='50', label=kw, shape="rectangle", style='filled', fillcolor=fcolor)
 
