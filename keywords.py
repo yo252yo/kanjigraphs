@@ -69,6 +69,9 @@ class Keywords(object):
                 similaredges[similar].add(kanji)
 
         for kw in keywords:
+            if not kw or len(kw) < 1:
+                continue
+ 
             if len(kw) > 1 and kw[0] in data.descriptions and kw[1] in data.descriptions:
                 dot.edge(data.descriptions[kw[0]], data.descriptions[kw[1]], color="green", len="0.5")#.decode('utf-8')
 
