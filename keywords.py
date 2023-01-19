@@ -6,8 +6,11 @@ import math
 
 
 class Keywords(object):
-    def labelof(keywords, kw):
-        return ("<b>" + kw + "</b>\n " + str(keywords[kw]))
+    def labelof(keywords, kw, data):
+        if len(kw) > 1:
+            return ("<b>" + kw + "</b>\n " + str(keywords[kw]))
+        else:
+            return data.descriptions[kw]
 
     def graph(data):
         print("Printing keywords")
@@ -21,20 +24,18 @@ class Keywords(object):
         kanjis = set()
         keywords = {}
 
+        # build a list of keywords, keyword -> full string of KW
         for kanji in data.kanjis:
+            kanjis.add(kanji)
             if kanji in data.keywords:
-                kanjis.add(kanji)
                 for kw in data.keywords[kanji]:
                     l = kw.split(" ")
                     if not l[0] in keywords:
                         keywords[l[0]] = kw
+            else: # kanjis that dont have keywords are their own keywords
+                keywords[kanji] = data.descriptions[kanji]
 
-        newkanjis = set()
-        for kanji in kanjis:
-            for similar in data.similars[kanji]:
-                newkanjis.add(similar)
 
-        kanjis = kanjis.union(newkanjis)
         for kanji in kanjis:
             ease = data.rattrapage[kanji] / 10
             fcolor = "0 0 " + str(1-(0.1 + 0.2 * ease))# + " 0.5"
@@ -49,18 +50,21 @@ class Keywords(object):
                 shape = "doublecircle"
                 color = "red"
 
-            node = dot.node(data.descriptions[kanji], label=kanji, shape=shape, color=color, fontcolor=fcolor, fillcolor=bgcolor, style='filled')
-
+            # Link all kw of a kanji
             if kanji in data.keywords:
+                # should we still plot the kanji node if the KW has only one kanji and kanas?
+                # we could not do that if we make sure that the KW node key is only kanjis
+                dot.node(data.descriptions[kanji], label=kanji, shape=shape, color=color, fontcolor=fcolor, fontsize='15', fillcolor=bgcolor, style='filled')
+
                 for kw in data.keywords[kanji]:
                     l = kw.split(" ")
                     if not l[0]:
                         continue
                     if not l[0] in keywords:
                         keywords[l[0]] = kw
-                    dot.edge(data.descriptions[kanji], Keywords.labelof(keywords, l[0]), len="0.5", color="green", penwidth="3")#.decode('utf-8')
+                    dot.edge(data.descriptions[kanji], Keywords.labelof(keywords, l[0], data), len="0.5", color="green", penwidth="3")#.decode('utf-8')
 
-            for similar in (data.similars[kanji] + data.semilars[kanji]):
+            for similar in (data.similars[kanji]):# + data.semilars[kanji]
                 if not similar in kanjis:
                     continue
                 if not similaredges[kanji] or not similar in similaredges[kanji]:
@@ -71,7 +75,7 @@ class Keywords(object):
         for kw in keywords:
             if not kw or len(kw) < 1:
                 continue
- 
+
             if len(kw) > 1 and kw[0] in data.descriptions and kw[1] in data.descriptions:
                 dot.edge(data.descriptions[kw[0]], data.descriptions[kw[1]], color="green", len="0.5")#.decode('utf-8')
 
@@ -88,6 +92,9 @@ class Keywords(object):
 
             fe = str((0.05 + 0.95 * ease * ease))
             fcolor = "0.4 " + fe + " 1"
-            node = dot.node(Keywords.labelof(keywords, kw), fontsize='50', label=kw, shape="rectangle", style='filled', fillcolor=fcolor)
+            fsize = '50'
+            if(len(kw) < 2):
+                fsize = '25'
+            node = dot.node(Keywords.labelof(keywords, kw, data), fontsize=fsize, label=kw, shape="rectangle", style='filled', fillcolor=fcolor)
 
         return dot
