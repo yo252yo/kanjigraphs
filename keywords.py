@@ -23,6 +23,7 @@ class Keywords(object):
 
         kanjis = set()
         keywords = {}
+        all_kw = []
 
         # build a list of keywords, keyword -> full string of KW
         for kanji in data.kanjis:
@@ -32,6 +33,7 @@ class Keywords(object):
                     l = kw.split(" ")
                     if not l[0] in keywords:
                         keywords[l[0]] = kw
+                        all_kw.append(l[0])
             else: # kanjis that dont have keywords are their own keywords
                 keywords[kanji] = data.descriptions[kanji]
 
@@ -71,6 +73,12 @@ class Keywords(object):
                     dot.edge(data.descriptions[kanji], data.descriptions[similar], color="lightgrey", constraint="false")#.decode('utf-8')
                 similaredges[kanji].add(similar)
                 similaredges[similar].add(kanji)
+
+        for i in range(0,len(all_kw)):
+            for j in range(i+1,len(all_kw)):
+                for l in all_kw[i]:
+                    if l in all_kw[j]:
+                        dot.edge(Keywords.labelof(keywords, all_kw[i], data), Keywords.labelof(keywords, all_kw[j], data), len="0.5", color="yellow", penwidth="2")#.decode('utf-8')
 
         for kw in keywords:
             if not kw or len(kw) < 1:
