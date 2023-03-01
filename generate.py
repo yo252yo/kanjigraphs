@@ -6,6 +6,7 @@ from composition import Composition
 from getdata import GetData
 from oroots import ORoots
 from similarity import Similarity
+from pain import Pain
 from keywords import Keywords
 
 
@@ -39,23 +40,27 @@ while not fetchedKS:
 
 
 kdot = Keywords.graph(data)
-kdisplay = random.random() < 0.6 # fix after the development of this graph
+kdisplay = random.random() < 0.5 # fix after the development of this graph
 kdot.render('D:\Japanese\jap_anki\graphs\keywords', view=kdisplay)
 
 sdot = Similarity.graph(data)
-sdisplay = random.random() < 0.6
+sdisplay = random.random() < 0.4
 sdot.render('D:\Japanese\jap_anki\graphs\similarity', view=sdisplay)
 
 cdot = Composition.graph(data)
-cdisplay = random.random() < 0.5
+cdisplay = random.random() < 0.3
 cdot.render('D:\Japanese\jap_anki\graphs\composition', view=cdisplay)
 
 odot = ORoots.graph(data)
-odisplay = random.random() < 0.4
+odisplay = random.random() < 0.2
 odot.render('D:\Japanese\jap_anki\graphs\oroots', view=odisplay)
 
 rdot = Components.graph(data)
-rdisplay = (not (sdisplay or cdisplay or odisplay or kdisplay)) or (random.random() < 0.3)
+rdisplay = random.random() < 0.1
 rdot.render('D:\Japanese\jap_anki\graphs\components', view=rdisplay)
+
+pdot = Pain.graph(data)
+pdisplay = (not (sdisplay or cdisplay or odisplay or kdisplay or rdisplay )) or (random.random() < 0.4)
+pdot.render('D:\Japanese\jap_anki\graphs\pain', view=pdisplay)
 
 print("All done")
