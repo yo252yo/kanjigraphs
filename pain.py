@@ -13,7 +13,7 @@ class Pain(object):
 
         kanjis = set()
         for kanji in data.kanjis:
-            if (data.rattrapage[kanji] <= 9 or float(data.colors[kanji].split(" ")[1]) >= 0.95):
+            if (data.rattrapage[kanji] < 8 or float(data.colors[kanji].split(" ")[1]) >= 0.95):
                 kanjis.add(kanji)
 
         expand = set()
