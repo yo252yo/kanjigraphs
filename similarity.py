@@ -6,7 +6,7 @@ import math
 
 
 class Similarity(object):
-    dangerzones = ['朴', '呈', '騒', '傷', '畳' , '滴', '措', '憎', '培', '鈍', '境', '料', '投', '義', '院', '完', '集', '攻', '職', '節', '真', '墓', '慣']
+    dangerzones = ['朴', '涜', '拝', '遺', '呈', '推', '楼', '騒', '漬', '傷', '畳' , '呈', '掌', '助', '滴', '措', '憎', '培', '鈍', '境', '料', '投', '義', '院', '完', '集', '攻', '職', '節', '真', '墓', '慣']
     def graph(data):
         print("Printing similarity")
         dot = Graph(comment='Kanjis', strict=True)
@@ -52,13 +52,15 @@ class Similarity(object):
 
                 for similar in data.similars[kanji]:
                     color = "#F1F1F1"
-                    weight = "1"
+                    weight = "0"
+                    constraint="false"
                     if (similar in Similarity.dangerzones or kanji in Similarity.dangerzones):
                         color = "red"
                         style = ""
-                        weight = "4"
+                        weight = "4000"
+                        constraint="true"
                     if not similaredges[kanji] or not similar in similaredges[kanji]:
-                        dot.edge(data.descriptions[kanji], data.descriptions[similar], color=color, constraint="true", weight=weight)#.decode('utf-8')
+                        dot.edge(data.descriptions[kanji], data.descriptions[similar], color=color, constraint=constraint, weight=weight)#.decode('utf-8')
                     similaredges[kanji].add(similar)
                     similaredges[similar].add(kanji)
 
@@ -68,7 +70,7 @@ class Similarity(object):
                         color = "red"
                     if not similaredges[kanji] or not similar in similaredges[kanji]:
                         if random.random() >= 0: # random dropoff
-                            dot.edge(data.descriptions[kanji], data.descriptions[similar], color=color, constraint="false")#.decode('utf-8')
+                            dot.edge(data.descriptions[kanji], data.descriptions[similar], color=color, constraint="false", weight="0")#.decode('utf-8')
                     similaredges[kanji].add(similar)
                     similaredges[similar].add(kanji)
 
