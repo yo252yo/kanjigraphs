@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
+import codecs
 import csv
 import random
-import codecs
-from urllib.request import urlopen
 from collections import defaultdict
+from urllib.request import urlopen
+
 
 class GetData(object):
     def __init__(self):
@@ -68,10 +69,11 @@ class GetData(object):
                 self.colors[k[0]] = '0.0 0.9 1.0'
                 self.spotlight.add(k[0])
             self.descriptions[k[0]] = k[1] + " (" + k[2] + ")"
+            self.descriptions[k[0]] = self.descriptions[k[0]].replace("&nbsp;", " ")
 
-            if k[21]:
+            try:
                 self.rattrapage[k[0]] = int(k[21])
-            else:
+            except:
                 self.rattrapage[k[0]] = 11
 
 
